@@ -17,3 +17,18 @@ SessionLocal = sessionmaker(
 
 DATABASE_URL = "postgresgl://postgres:Babiramz@143@localhost:5432/test"
 DATABASE_URL = "postgresql+asyncpg://postgres:Babiramz@143@localhost:5432/airport_pool"
+
+import os
+from sqlalchemy.ext.asyncio import create_async_engine
+from sqlalchemy.orm import declarative_base
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+DATABASE_URL = DATABASE_URL.replace(
+    "postgresql://", 
+    "postgresql+asyncpg://"
+)
+
+engine = create_async_engine(DATABASE_URL, echo=True)
+
+Base = declarative_base()
